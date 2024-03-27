@@ -1,4 +1,4 @@
-apiVersion: batch/v1beta1
+apiVersion: {{ ternary "batch/v1" "batch/v1beta1" (semverCompare ">=1.25.0-0" .Capabilities.KubeVersion.Version) }}
 kind: CronJob
 metadata:
   name: "{{ .Release.Name }}-job"
