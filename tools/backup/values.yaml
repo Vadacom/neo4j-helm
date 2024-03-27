@@ -1,5 +1,6 @@
 image: gcr.io/neo4j-helm/backup
 imageTag: 4.2.7-2
+imagePullSecrets: []
 podLabels: {}
 podAnnotations: {}
 neo4jaddr: holder-neo4j.default.svc.cluster.local:6362

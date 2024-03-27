@@ -36,6 +36,9 @@ spec:
           containers:
             - name: graph-backup
               image: {{ .Values.image }}:{{ .Values.imageTag }}
+              {{- if .Values.imagePullSecrets }}
+              imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 16 }}
+              {{- end }}
               imagePullPolicy: Always
               env:
                 - name: NEO4J_ADDR
