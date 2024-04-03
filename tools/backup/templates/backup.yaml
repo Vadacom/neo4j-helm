@@ -31,15 +31,16 @@ spec:
           {{- /* explicitly mount token because some service accounts disable automount-by-default and require explicit opt-in */}}
           automountServiceAccountToken: true
           {{- end }}
+          {{- with .Values.imagePullSecrets }}
+          imagePullSecrets:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
           restartPolicy: Never
           shareProcessNamespace: {{ .Values.shareProcessNamespace }}
           containers:
             - name: graph-backup
               image: {{ .Values.image }}:{{ .Values.imageTag }}
-              {{- if .Values.imagePullSecrets }}
-              imagePullSecrets: {{ toYaml .Values.imagePullSecrets | nindent 16 }}
-              {{- end }}
-              imagePullPolicy: Always
+              imagePullPolicy: {{ .Values.imagePullPolicy }}
               env:
                 - name: NEO4J_ADDR
                   value: {{ .Values.neo4jaddr }}
